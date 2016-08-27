@@ -119,8 +119,9 @@ switch (grappleState) {
     case GRAPPLE_DETACHING:{
         if (rope != noone) {
             audio_play_sound(sndGrappleReturn, 0, 0);
-            with (rope) instance_destroy();
-                rope = noone;
+            with (rope) event_perform(ev_other, ev_user0);
+            rope.kill = true;
+            rope = noone;
             }
         
         grappleState = GRAPPLE_IDLE;

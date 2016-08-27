@@ -29,13 +29,39 @@
 length = 0;
 ropeTex = sprite_get_texture(sprRope,0);
 
-grappleX = objPlayer.grappleX;
-grappleY = objPlayer.grappleY;
+grappleX = x;
+grappleY = y;
 
 x = objPlayer.x;
 y = objPlayer.y;
-ropeDir = point_direction(x, y, grappleX, grappleY);
+ropeDir = point_direction(x, y, objPlayer.grappleX, objPlayer.grappleY);
+initialRopeDir = ropeDir;
 ropeLen = point_distance(x, y, grappleX, grappleY);
+
+kill = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>instance_destroy();
 </string>
           </argument>
         </arguments>
@@ -58,13 +84,42 @@ ropeLen = point_distance(x, y, grappleX, grappleY);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>grappleX = objPlayer.grappleX;
-grappleY = objPlayer.grappleY;
+            <string>
+if (kill) {
+    grappleX = lerp(grappleX,objPlayer.x,0.4);
+    grappleY = lerp(grappleY,objPlayer.y,0.4);
+} else {
+    grappleX = lerp(grappleX,objPlayer.grappleX,0.4);
+    grappleY = lerp(grappleY,objPlayer.grappleY,0.4);
+}
 
 x = objPlayer.x;
 y = objPlayer.y;
 ropeDir = point_direction(x, y, grappleX, grappleY);
 ropeLen = point_distance(x, y, grappleX, grappleY);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>alarm[0] = 15;
 </string>
           </argument>
         </arguments>
@@ -87,7 +142,8 @@ ropeLen = point_distance(x, y, grappleX, grappleY);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>texture_set_repeat(true);
+            <string>
+texture_set_repeat(true);
 draw_set_color(c_white);
 draw_primitive_begin_texture(pr_trianglestrip, ropeTex) {
     draw_vertex_texture(x+lengthdir_x(8,ropeDir+90), y+lengthdir_y(8,ropeDir+90), ropeLen/16, 1);
@@ -101,6 +157,8 @@ draw_primitive_begin_texture(pr_trianglestrip, ropeTex) {
 
 } 
 draw_primitive_end();
+
+draw_sprite_ext(sprHook, 0, grappleX, grappleY, 1, 1, initialRopeDir, c_white, 1);
 </string>
           </argument>
         </arguments>

@@ -17,9 +17,12 @@
     <sprite>sprites\sprWall</sprite>
     <sprite>sprites\sprArrow</sprite>
     <sprite>sprites\sprTarget</sprite>
-    <sprite>sprites\sprRope</sprite>
     <sprite>sprites\sprWallTex1</sprite>
     <sprite>sprites\sprWallTexBricks</sprite>
+    <sprites name="grapplinghook">
+      <sprite>sprites\sprRope</sprite>
+      <sprite>sprites\sprHook</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
