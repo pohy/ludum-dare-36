@@ -7,6 +7,8 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\spr_placeholder</sprite>
+    <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\sprWall</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -15,8 +17,12 @@
     <script>scripts\getCompatibleTiles.gml</script>
     <script>scripts\findCompatibleTileIndex.gml</script>
     <script>scripts\addToListInMap.gml</script>
+    <script>scripts\collision_line_first.gml</script>
   </scripts>
   <objects name="objects">
+    <object>objects\objWall</object>
+    <object>objects\objPlayer</object>
+    <object>objects\objCamera</object>
     <object>objects\obj_generator</object>
     <objects name="tiles">
       <object>objects\tile_corridor</object>
@@ -26,8 +32,15 @@
     </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\rm_test</room>
     <room>rooms\room0</room>
   </rooms>
+  <constants number="4">
+    <constant name="GRAPPLE_IDLE">0</constant>
+    <constant name="GRAPPLE_SHOOTING">1</constant>
+    <constant name="GRAPPLE_ATTACHED">2</constant>
+    <constant name="GRAPPLE_DETACHING">3</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>
