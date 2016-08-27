@@ -56,7 +56,7 @@ flyDir = 0;
 }
 else {
     xSpeed = xMove;
-    //yMove += 1;
+    //yMove += 0.1;
     ySpeed = yMove;
     flyDir = point_direction(0, 0, xSpeed, ySpeed);
     image_angle = flyDir;

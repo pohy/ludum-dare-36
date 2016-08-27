@@ -77,18 +77,18 @@ rope = noone;
 onGround = (place_meeting(x,y+1,objWalkable));
 onCeiling = (place_meeting(x,y-1,objWalkable));
 
+    
 switch (grappleState) {
 case GRAPPLE_IDLE:
 case GRAPPLE_SHOOTING:
 case GRAPPLE_DETACHING: {
-    xMove = (keyboard_check(ord('D')) - keyboard_check(ord('A'))) * moveSpeed * ((onGround+0.2)/1.2);
     break;
     }
 }
 
 switch (grappleState) {
     case GRAPPLE_IDLE:{
-    
+    xMove = (keyboard_check(ord('D')) - keyboard_check(ord('A'))) * moveSpeed * ((onGround+0.2)/1.2);
         if (mouse_check_button(mb_right)) {
             grappleState = GRAPPLE_SHOOTING;
         }
@@ -233,7 +233,7 @@ else {
     grappleIndicatorX = mouse_x;
     grappleIndicatorY = mouse_y;
 }
-
+draw_set_color(c_black);
 draw_set_alpha(grappleIndicatorAlpha);
 draw_line(x, y, grappleIndicatorX, grappleIndicatorY);
 draw_circle(grappleIndicatorX, grappleIndicatorY, 8, true);
