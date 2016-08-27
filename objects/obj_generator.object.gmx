@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>available_tiles = ds_list_create();
 
-ds_list_add(available_tiles, tile_corridor);
+ds_list_add(available_tiles, lvl_corridor);
 
 generateRoom(available_tiles);
 </string>

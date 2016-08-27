@@ -14,8 +14,8 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\generateRoom.gml</script>
-    <script>scripts\getCompatibleTiles.gml</script>
-    <script>scripts\findCompatibleTileIndex.gml</script>
+    <script>scripts\getCompatibleLevels.gml</script>
+    <script>scripts\findCompatibleLevelIndex.gml</script>
     <script>scripts\addToListInMap.gml</script>
     <script>scripts\collision_line_first.gml</script>
   </scripts>
@@ -25,15 +25,15 @@
     <object>objects\objCamera</object>
     <object>objects\obj_generator</object>
     <objects name="tiles">
-      <object>objects\tile_corridor</object>
+      <object>objects\lvl_corridor</object>
       <objects name="objects">
         <object>objects\obj_floor</object>
       </objects>
     </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\room_generator</room>
     <room>rooms\rm_test</room>
-    <room>rooms\room0</room>
   </rooms>
   <constants number="4">
     <constant name="GRAPPLE_IDLE">0</constant>
