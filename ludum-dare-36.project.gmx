@@ -9,6 +9,8 @@
     <sprite>sprites\spr_placeholder</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprWall</sprite>
+    <sprite>sprites\sprArrow</sprite>
+    <sprite>sprites\sprTarget</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -30,6 +32,11 @@
         <object>objects\obj_floor</object>
       </objects>
     </objects>
+    <object>objects\objBow</object>
+    <object>objects\objArrow</object>
+    <object>objects\objTarget</object>
+    <object>objects\objShootable</object>
+    <object>objects\objWalkable</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_test</room>
