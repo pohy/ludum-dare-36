@@ -46,7 +46,9 @@ onGround = 0;
 
 grappleSpeed = 16;
 grappleState = GRAPPLE_IDLE;
-grappleMaxLen = 640;
+grappleMaxLen = 720;
+
+rope = noone;
 </string>
           </argument>
         </arguments>
@@ -72,31 +74,51 @@ grappleMaxLen = 640;
             <string>if (keyboard_check(ord('R'))) {
     room_restart();
 }
-onGround = (place_meeting(x,y+1,objWall));
-onCeiling = (place_meeting(x,y-1,objWall));
+onGround = (place_meeting(x,y+1,objWalkable));
+onCeiling = (place_meeting(x,y-1,objWalkable));
 
+    
+switch (grappleState) {
+case GRAPPLE_IDLE:
+case GRAPPLE_SHOOTING:
+case GRAPPLE_DETACHING: {
+    xMove = (keyboard_check(ord('D')) - keyboard_check(ord('A'))) * moveSpeed * ((onGround+0.2)/1.2);
+    break;
+    }
+}
 
 switch (grappleState) {
-    case GRAPPLE_IDLE:
-        xMove = (keyboard_check(ord('D')) - keyboard_check(ord('A'))) * moveSpeed * ((onGround + 0.2) / 1.2);
+    case GRAPPLE_IDLE:{
         if (mouse_check_button(mb_right)) {
             grappleState = GRAPPLE_SHOOTING;
         }
         break;
+        }
     case GRAPPLE_SHOOTING:
         var mouseDir = point_direction(x, y, mouse_x, mouse_y);
-        var collisionPoint = collision_line_first(x, y, x+lengthdir_x(grappleMaxLen,mouseDir), y+lengthdir_y(grappleMaxLen,mouseDir), objWall, false, true);
+        var collisionPoint = collision_line_first(x, y, x+lengthdir_x(grappleMaxLen,mouseDir), y+lengthdir_y(grappleMaxLen,mouseDir), objWalkable, false, true);
         grappleX = collisionPoint[0];
         grappleY = collisionPoint[1];
         grappleInstance = collisionPoint[2];
-
+        
+        
+        
         if (grappleInstance == noone) {
             grappleState = GRAPPLE_DETACHING;
         } else {
             grappleState = GRAPPLE_ATTACHED;
+            rope = instance_create(x,y,objGrappleRope);
+            audio_play_sound(sndGrappleShoot, 0, 0);
         }
         break;
     case GRAPPLE_DETACHING:{
+        if (rope != noone) {
+            audio_play_sound(sndGrappleReturn, 0, 0);
+            with (rope) event_perform(ev_other, ev_user0);
+            rope.kill = true;
+            rope = noone;
+            }
+        
         grappleState = GRAPPLE_IDLE;
         break;
     }
@@ -147,16 +169,16 @@ xSpeed = clamp(xSpeed, -maxHorSpeed, maxHorSpeed);
 ySpeed = clamp(ySpeed, -maxVertSpeed, maxVertSpeed);
 
 
-if (place_meeting(x+xSpeed,y,objWall)) {
-    while (!place_meeting(x+(collisionPrecision*sign(xSpeed)), y, objWall)) {
+if (place_meeting(x+xSpeed,y,objWalkable)) {
+    while (!place_meeting(x+(collisionPrecision * sign(xSpeed)), y, objWalkable)) {
         x += collisionPrecision * sign(xSpeed);
     }
     xSpeed = 0;
 }
 x += xSpeed;
 
-if (place_meeting(x,y+ySpeed,objWall)) {
-    while (!place_meeting(x, y + (collisionPrecision * sign(ySpeed)), objWall)) {
+if (place_meeting(x,y+ySpeed,objWalkable)) {
+    while (!place_meeting(x, y + (collisionPrecision * sign(ySpeed)), objWalkable)) {
         y += collisionPrecision * sign(ySpeed);
     }
     ySpeed = 0;
@@ -166,8 +188,6 @@ y += ySpeed;
 totalSpeed = point_distance(0,0,xSpeed,ySpeed);
 xMove = 0;
 yMove = 0;
-
-
 </string>
           </argument>
         </arguments>
@@ -193,8 +213,8 @@ yMove = 0;
             <string>draw_self();
 draw_text(x + 128, y + 5, string(x) + ', ' + string(y))
 if (grappleState == GRAPPLE_ATTACHED) {
-    draw_line(x, y, grappleX, grappleY);
-    draw_text(x+64, y-32, string(grappleX)+"#"+string(grappleY));
+   // draw_line(x, y, grappleX, grappleY);
+  //  draw_text(x+64, y-32, string(grappleX)+"#"+string(grappleY));
 }
 
 mouseDist = point_distance(x,y,mouse_x,mouse_y);
@@ -212,10 +232,11 @@ else {
     grappleIndicatorX = mouse_x;
     grappleIndicatorY = mouse_y;
 }
-
+draw_set_color(c_black);
 draw_set_alpha(grappleIndicatorAlpha);
 draw_line(x, y, grappleIndicatorX, grappleIndicatorY);
 draw_circle(grappleIndicatorX, grappleIndicatorY, 8, true);
+draw_circle(x, y, grappleMaxLen, true);
 draw_set_alpha(1);
 </string>
           </argument>

@@ -14,7 +14,7 @@ var availableLevels = argument0;
  */
 var seed = argument1;
  
-var levelCount = 3;
+var levelCount = 10;
 // TODO: make it a grid
 // var generatedLevels = ds_list_create();
 
