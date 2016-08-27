@@ -77,19 +77,13 @@ onCeiling = (place_meeting(x,y-1,objWall));
 
 
 switch (grappleState) {
-    case GRAPPLE_IDLE:{
-    
-        
-        xMove = (keyboard_check(ord('D')) - keyboard_check(ord('A'))) * moveSpeed * ((onGround+0.2)/1.2);
-        
-        
+    case GRAPPLE_IDLE:
+        xMove = (keyboard_check(ord('D')) - keyboard_check(ord('A'))) * moveSpeed * ((onGround + 0.2) / 1.2);
         if (mouse_check_button(mb_right)) {
             grappleState = GRAPPLE_SHOOTING;
         }
         break;
-    }
-    
-    case GRAPPLE_SHOOTING: {
+    case GRAPPLE_SHOOTING:
         var mouseDir = point_direction(x, y, mouse_x, mouse_y);
         var collisionPoint = collision_line_first(x, y, x+lengthdir_x(grappleMaxLen,mouseDir), y+lengthdir_y(grappleMaxLen,mouseDir), objWall, false, true);
         grappleX = collisionPoint[0];
@@ -98,13 +92,10 @@ switch (grappleState) {
 
         if (grappleInstance == noone) {
             grappleState = GRAPPLE_DETACHING;
-        }
-        else {
+        } else {
             grappleState = GRAPPLE_ATTACHED;
         }
         break;
-    }
-    
     case GRAPPLE_DETACHING:{
         grappleState = GRAPPLE_IDLE;
         break;
@@ -200,6 +191,7 @@ yMove = 0;
           <argument>
             <kind>1</kind>
             <string>draw_self();
+draw_text(x + 128, y + 5, string(x) + ', ' + string(y))
 if (grappleState == GRAPPLE_ATTACHED) {
     draw_line(x, y, grappleX, grappleY);
     draw_text(x+64, y-32, string(grappleX)+"#"+string(grappleY));

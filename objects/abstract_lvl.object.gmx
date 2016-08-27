@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>abstract_lvl</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,48 +25,28 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
+            <string>width = 0;
+height = 0;
 
-width = room_height;
-height = width;
+tile_sprite_size = 64;
 
-var floorInstance = instance_create(-1000, -1000, objWall);
-floor_instances = ds_list_create();
-var sprSize = objWall.sprite_width;
-var floorCount = width / sprSize;
+compatible_left = ds_list_create();
+compatible_right = ds_list_create();
+compatible_top = ds_list_create();
+compatible_bottom = ds_list_create();
 
-ds_list_add(compatible_left, lvl_corridor);
-ds_list_add(compatible_right, lvl_corridor);
+left = false;
+right = false;
+top = false;
+bottom = false;
 
-for (var i = 0; i &lt; floorCount; i++) {
-    for (var j = 0; j &lt; floorCount; j++) {
-        if (
-                (i == 0 &amp;&amp; j == 0)
-                || (i == floorCount - 1 &amp;&amp; j == 0)
-                || (i == 0 &amp;&amp; j == floorCount - 1)
-                || (i == floorCount - 1 &amp;&amp; j == floorCount - 1)
-            ) {
-            ds_list_add(
-                floor_instances,
-                instance_create(x + i * sprSize, y + j * sprSize, objWall)
-            );  
-        }
-    }
-}
-
-with (floorInstance) {
-    instance_destroy();
-}
-
-event_perform(ev_other, ev_user0);
-
-
+count = instance_number(self.object_index)
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="1" enumb="0">
+    <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -83,10 +63,12 @@ event_perform(ev_other, ev_user0);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>for(var i = 0; i &lt; ds_list_size(floor_instances); i++) {
-    with(floor_instances[| i]) {
-        instance_destroy();
-    }
+            <string>if (width == 0 || height == 0) {
+   show_error('Width or height have not been initialized', true);
+}
+
+if (width != height) {
+   show_error(string(object_get_name(self.object_index)) + "'s sprite width is not same as height", true);
 }
 </string>
           </argument>

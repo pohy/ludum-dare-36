@@ -27,67 +27,25 @@
             <kind>1</kind>
             <string>event_inherited();
 
-width = room_height;
-height = width;
+width = self.sprite_width;
+height = self.sprite_height;
 
-var floorInstance = instance_create(-1000, -1000, objWall);
-floor_instances = ds_list_create();
-var sprSize = objWall.sprite_width;
-var floorCount = width / sprSize;
-
-ds_list_add(compatible_left, lvl_corridor);
-ds_list_add(compatible_right, lvl_corridor);
-
-for (var i = 0; i &lt; floorCount; i++) {
-    for (var j = 0; j &lt; floorCount; j++) {
-        if (
-                (i == 0 &amp;&amp; j == 0)
-                || (i == floorCount - 1 &amp;&amp; j == 0)
-                || (i == 0 &amp;&amp; j == floorCount - 1)
-                || (i == floorCount - 1 &amp;&amp; j == floorCount - 1)
-            ) {
-            ds_list_add(
-                floor_instances,
-                instance_create(x + i * sprSize, y + j * sprSize, objWall)
-            );  
+for (var i = 0; i &lt; width; i++) {
+    for (var j = 0; j &lt; height; j++) {
+        var color = getSpritePixelColorRGB(self.sprite_index, i, j)
+        var obj = undefined;
+        if (color[0] == 255 &amp;&amp; color[1] == 0 &amp;&amp; color[2] == 0) {
+           obj = objWall;
+        }
+        if (obj != undefined) {
+           instance_create(x + i * tile_sprite_size, y + j * tile_sprite_size, obj);
         }
     }
 }
 
-with (floorInstance) {
-    instance_destroy();
-}
+//show_debug_message(string(x) + ', ' + string(y))
 
 event_perform(ev_other, ev_user0);
-
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="1" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>for(var i = 0; i &lt; ds_list_size(floor_instances); i++) {
-    with(floor_instances[| i]) {
-        instance_destroy();
-    }
-}
 </string>
           </argument>
         </arguments>

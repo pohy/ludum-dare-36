@@ -9,6 +9,10 @@
     <sprite>sprites\spr_placeholder</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprWall</sprite>
+    <sprites name="levels">
+      <sprite>sprites\spr_lvl_start</sprite>
+      <sprite>sprites\spr_lvl_test</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -16,23 +20,33 @@
     <script>scripts\generateRoom.gml</script>
     <script>scripts\getCompatibleLevels.gml</script>
     <script>scripts\findCompatibleLevelIndex.gml</script>
+    <script>scripts\getCompatibleLevelsForSide.gml</script>
     <script>scripts\addToListInMap.gml</script>
     <script>scripts\collision_line_first.gml</script>
+    <script>scripts\getSpritePixelColorHSV.gml</script>
+    <script>scripts\getSpritePixelColorRGB.gml</script>
+    <script>scripts\createSidesArray.gml</script>
+    <script>scripts\getCompatibleSidesOfLevel.gml</script>
+    <script>scripts\useLevelSide.gml</script>
+    <script>scripts\createLevelOnSide.gml</script>
   </scripts>
   <objects name="objects">
-    <object>objects\objWall</object>
     <object>objects\objPlayer</object>
     <object>objects\objCamera</object>
     <object>objects\obj_generator</object>
-    <objects name="tiles">
+    <objects name="levels">
+      <object>objects\abstract_lvl</object>
+      <object>objects\bitmap_level</object>
       <object>objects\lvl_corridor</object>
+      <object>objects\lvl_start</object>
       <objects name="objects">
         <object>objects\obj_floor</object>
+        <object>objects\objWall</object>
       </objects>
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\room_generator</room>
+    <room>rooms\rm_generator</room>
     <room>rooms\rm_test</room>
   </rooms>
   <constants number="4">
