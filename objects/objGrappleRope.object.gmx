@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>6</depth>
+  <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,15 +25,23 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>falling = true;
-flyDir = 0;
+            <string>width = 0;
+length = 0;
+ropeTex = sprite_get_texture(sprRope,0);
 
+grappleX = objPlayer.grappleX;
+grappleY = objPlayer.grappleY;
+
+x = objPlayer.x;
+y = objPlayer.y;
+ropeDir = point_direction(x, y, grappleX, grappleY);
+ropeLen = point_distance(x, y, grappleX, grappleY);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="3" enumb="1">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -50,62 +58,13 @@ flyDir = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (falling == false) {
-    xSpeed = 0;
-    ySpeed = 0;
-}
-else {
-    xSpeed = xMove;
-    //yMove += 1;
-    ySpeed = yMove;
-    flyDir = point_direction(0, 0, xSpeed, ySpeed);
-    image_angle = flyDir;
-}
+            <string>grappleX = objPlayer.grappleX;
+grappleY = objPlayer.grappleY;
 
-xColInstance = collision_line(x, y, x+xSpeed, y, objShootable, false, true);
-
-if (xColInstance) {
-    while (!collision_line(x, y, x+sign(xSpeed), y, objShootable, false, true)) {
-        x += sign(xSpeed);
-    }
-    xSpeed = 0;
-    xColInstance.hit = true;
-    falling = false;
-}
-x += xSpeed;
-
-yColInstance = collision_line(x, y, x, y+ySpeed, objShootable, false, true);
-if (yColInstance) {
-    while (!collision_line(x, y, x, y+sign(ySpeed), objShootable, false, true)) {
-        y += sign(ySpeed);
-    }
-    ySpeed = 0;
-    yColInstance.hit = true;
-    falling = false;
-}
-y += ySpeed;
-
-/*
-if (place_meeting(x+xSpeed, y, objShootable)) {
-    while (!place_meeting(x+sign(xSpeed), y, objShootable)) {
-        x += sign(xSpeed);
-    }
-    xSpeed = 0;
-    falling = false;
-}
-x += xSpeed;
-
-if (place_meeting(x, y+ySpeed, objShootable)) {
-    while (!place_meeting(x, y+sign(ySpeed), objShootable)) {
-        y += sign(ySpeed);
-    }
-    ySpeed = 0;
-    falling = false;
-}
-y += ySpeed;
-*/
-
-
+x = objPlayer.x;
+y = objPlayer.y;
+ropeDir = point_direction(x, y, grappleX, grappleY);
+ropeLen = point_distance(x, y, grappleX, grappleY);
 </string>
           </argument>
         </arguments>
@@ -128,8 +87,20 @@ y += ySpeed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-draw_sprite_ext(sprArrow, 0, x, y, 1, 1, flyDir, c_white, 1);
+            <string>texture_set_repeat(true);
+draw_set_color(c_white);
+draw_primitive_begin_texture(pr_trianglestrip, ropeTex) {
+    draw_vertex_texture(x+lengthdir_x(8,ropeDir+90), y+lengthdir_y(8,ropeDir+90), ropeLen/16, 1);
+
+        draw_vertex_texture(x+lengthdir_x(8,ropeDir-90), y+lengthdir_y(8,ropeDir-90), ropeLen/16, 0);
+
+
+    draw_vertex_texture(grappleX+lengthdir_x(8,ropeDir+90), grappleY+lengthdir_y(8,ropeDir+90), 0, 1);
+    
+    draw_vertex_texture(grappleX+lengthdir_x(8,ropeDir-90), grappleY+lengthdir_y(8,ropeDir-90), 0, 0);
+
+} 
+draw_primitive_end();
 </string>
           </argument>
         </arguments>

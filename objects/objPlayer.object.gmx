@@ -46,7 +46,9 @@ onGround = 0;
 
 grappleSpeed = 16;
 grappleState = GRAPPLE_IDLE;
-grappleMaxLen = 640;
+grappleMaxLen = 720;
+
+rope = noone;
 </string>
           </argument>
         </arguments>
@@ -99,17 +101,24 @@ switch (grappleState) {
         grappleX = collisionPoint[0];
         grappleY = collisionPoint[1];
         grappleInstance = collisionPoint[2];
-
+        
+        
+        
         if (grappleInstance == noone) {
             grappleState = GRAPPLE_DETACHING;
         }
         else {
             grappleState = GRAPPLE_ATTACHED;
+            rope = instance_create(x,y,objGrappleRope);
         }
         break;
     }
     
     case GRAPPLE_DETACHING:{
+        if (rope != noone) {
+        with (rope) instance_destroy();
+        rope = noone;
+        }
         grappleState = GRAPPLE_IDLE;
         break;
     }
@@ -205,8 +214,8 @@ yMove = 0;
             <kind>1</kind>
             <string>draw_self();
 if (grappleState == GRAPPLE_ATTACHED) {
-    draw_line(x, y, grappleX, grappleY);
-    draw_text(x+64, y-32, string(grappleX)+"#"+string(grappleY));
+   // draw_line(x, y, grappleX, grappleY);
+  //  draw_text(x+64, y-32, string(grappleX)+"#"+string(grappleY));
 }
 
 mouseDist = point_distance(x,y,mouse_x,mouse_y);
