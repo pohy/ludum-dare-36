@@ -73,7 +73,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite(sprWallTex1, tex, x, y);
+            <string>draw_sprite(sprWallTexBricks, tex, x, y);
 </string>
           </argument>
         </arguments>

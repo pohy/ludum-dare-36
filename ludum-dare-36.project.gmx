@@ -19,6 +19,7 @@
     <sprite>sprites\sprTarget</sprite>
     <sprite>sprites\sprRope</sprite>
     <sprite>sprites\sprWallTex1</sprite>
+    <sprite>sprites\sprWallTexBricks</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
