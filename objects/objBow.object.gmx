@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>pow = 20;
+            <string>pow = 30;
 aimDirection = 0;
 
 </string>
@@ -56,6 +56,7 @@ aimDirection = point_direction(x,y, mouse_x, mouse_y);
 
 
 if (mouse_check_button_pressed(mb_left)) {
+    audio_play_sound(sndArrowShoot, 0, 0);
     var arrow = instance_create(x, y, objArrow);
     //with(arrow) motion_add(other.aimDirection, other.pow/6);
     arrow.xMove = lengthdir_x(pow, aimDirection);

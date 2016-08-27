@@ -70,6 +70,9 @@ if (xColInstance) {
     }
     xSpeed = 0;
     xColInstance.hit = true;
+    if (falling == true) {
+        audio_play_sound(sndArrowHit, 0, 0);
+    }
     falling = false;
 }
 x += xSpeed;
@@ -81,6 +84,9 @@ if (yColInstance) {
     }
     ySpeed = 0;
     yColInstance.hit = true;
+    if (falling == true) {
+        audio_play_sound(sndArrowHit, 0, 0);
+    }
     falling = false;
 }
 y += ySpeed;

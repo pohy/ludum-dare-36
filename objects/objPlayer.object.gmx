@@ -82,13 +82,14 @@ switch (grappleState) {
 case GRAPPLE_IDLE:
 case GRAPPLE_SHOOTING:
 case GRAPPLE_DETACHING: {
+    xMove = (keyboard_check(ord('D')) - keyboard_check(ord('A'))) * moveSpeed * ((onGround+0.2)/1.2);
     break;
     }
 }
 
 switch (grappleState) {
     case GRAPPLE_IDLE:{
-    xMove = (keyboard_check(ord('D')) - keyboard_check(ord('A'))) * moveSpeed * ((onGround+0.2)/1.2);
+    
         if (mouse_check_button(mb_right)) {
             grappleState = GRAPPLE_SHOOTING;
         }
@@ -110,15 +111,18 @@ switch (grappleState) {
         else {
             grappleState = GRAPPLE_ATTACHED;
             rope = instance_create(x,y,objGrappleRope);
+            audio_play_sound(sndGrappleShoot, 0, 0);
         }
         break;
     }
     
     case GRAPPLE_DETACHING:{
         if (rope != noone) {
-        with (rope) instance_destroy();
-        rope = noone;
-        }
+            audio_play_sound(sndGrappleReturn, 0, 0);
+            with (rope) instance_destroy();
+                rope = noone;
+            }
+        
         grappleState = GRAPPLE_IDLE;
         break;
     }
