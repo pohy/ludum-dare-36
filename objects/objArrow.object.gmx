@@ -25,9 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>falling = true;
-flyDir = 0;
+            <string>//falling = true;
+//flyDir = 0;
+playerX = objPlayer.x;
+playerY = objPlayer.y;
 
+arrowX = objPlayer.x;
+arrowY = objPlayer.y;
+alpha = 1;
 </string>
           </argument>
         </arguments>
@@ -50,7 +55,14 @@ flyDir = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (falling == false) {
+            <string>//playerX = lerp(playerX, x, 0.01);
+//playerY = lerp(playerY, y, 0.01);
+if (alpha &gt; 0) {
+    alpha -= 0.01;
+}
+arrowX = lerp(arrowX, x, 0.75);
+arrowY = lerp(arrowY, y, 0.75);
+/*if (falling == false) {
     xSpeed = 0;
     ySpeed = 0;
 }
@@ -61,7 +73,7 @@ else {
     flyDir = point_direction(0, 0, xSpeed, ySpeed);
     image_angle = flyDir;
 }
-
+if (falling == true) {
 xColInstance = collision_line(x, y, x+xSpeed, y, objShootable, false, true);
 
 if (xColInstance) {
@@ -70,9 +82,9 @@ if (xColInstance) {
     }
     xSpeed = 0;
     xColInstance.hit = true;
-    if (falling == true) {
+
         audio_play_sound(sndArrowHit, 0, 0);
-    }
+    
     falling = false;
 }
 x += xSpeed;
@@ -84,12 +96,13 @@ if (yColInstance) {
     }
     ySpeed = 0;
     yColInstance.hit = true;
-    if (falling == true) {
+//    if (falling == true) {
         audio_play_sound(sndArrowHit, 0, 0);
-    }
+//    }
     falling = false;
 }
 y += ySpeed;
+}
 
 /*
 if (place_meeting(x+xSpeed, y, objShootable)) {
@@ -134,8 +147,18 @@ y += ySpeed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-draw_sprite_ext(sprArrow, 0, x, y, 1, 1, flyDir, c_white, 1);
+            <string>//draw_line(playerX,playerY,x,y);
+
+draw_set_color(c_white);
+if (alpha &gt; 0) {
+draw_primitive_begin(pr_trianglestrip) {
+    draw_vertex_colour(x+lengthdir_x(2,direction+90), y+lengthdir_y(2,direction+90), c_white, alpha);
+    draw_vertex_colour(x+lengthdir_x(2,direction-90), y+lengthdir_y(2,direction-90), c_white, alpha);
+    draw_vertex_colour(playerX, playerY, c_white, 0);
+} 
+draw_primitive_end();
+}
+draw_sprite_ext(sprArrow, 0, arrowX, arrowY, 1, 1, direction, c_white, 1);
 </string>
           </argument>
         </arguments>

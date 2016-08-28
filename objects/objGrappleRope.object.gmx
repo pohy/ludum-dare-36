@@ -67,7 +67,7 @@ kill = false;
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="1">
+    <event eventtype="3" enumb="2">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -119,7 +119,7 @@ ropeLen = point_distance(x, y, grappleX, grappleY);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = 15;
+            <string>alarm[0] = 10;
 </string>
           </argument>
         </arguments>

@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>pow = 30;
 aimDirection = 0;
-
+maxHitDistance = 4096;
 </string>
           </argument>
         </arguments>
@@ -57,10 +57,15 @@ aimDirection = point_direction(x,y, mouse_x, mouse_y);
 
 if (mouse_check_button_pressed(mb_left)) {
     audio_play_sound(sndArrowShoot, 0, 0);
-    var arrow = instance_create(x, y, objArrow);
+    var hitInst = collision_line_first(x, y, x + lengthdir_x(maxHitDistance, aimDirection), y + lengthdir_y(maxHitDistance, aimDirection), objShootable, 0, 0);
+    if (hitInst[2] != noone) {
+    var arrow = instance_create(hitInst[0], hitInst[1], objArrow);
     //with(arrow) motion_add(other.aimDirection, other.pow/6);
-    arrow.xMove = lengthdir_x(pow, aimDirection);
-    arrow.yMove = lengthdir_y(pow, aimDirection);
+    arrow.direction = aimDirection;
+    //arrow.yMove = lengthdir_y(pow, aimDirection);
+    hitInst[2].hit = true;
+    audio_play_sound(sndArrowHit, 0, 0);
+    }
 }
 </string>
           </argument>

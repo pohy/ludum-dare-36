@@ -25,8 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>view_wview[0] = lerp(view_wview[0],1920 * (1 + objPlayer.totalSpeed/16),0.01);
-view_hview[0] = lerp(view_hview[0],1080 * (1 + objPlayer.totalSpeed/16),0.01);
+            <string>view_wview[0] = lerp(view_wview[0],1920 * (1 + objPlayer.totalSpeed/32),0.01);
+view_hview[0] = lerp(view_hview[0],1080 * (1 + objPlayer.totalSpeed/32),0.01);
 
 
 
